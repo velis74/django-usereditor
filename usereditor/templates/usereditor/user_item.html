@@ -1,0 +1,46 @@
+{% load i18n dynamicforms %}
+
+{% if form.has_non_field_errors %}
+  {% for error in form.errors.non_field_errors %}
+    <div class="text-danger">{{ error }}</div>
+  {% endfor %}
+{% endif %}
+
+{% block form_inner %}
+  {% render_field form.id style=style %}
+  <div class="row">
+    <div class="col-6 col-xs-6">{% render_field form.first_name style=style %}</div>
+    <div class="col-6 col-xs-6">{% render_field form.last_name style=style %}</div>
+  </div>
+  <div class="row">
+    <div class="col-6 col-xs-6">{% render_field form.username style=style %}</div>
+    <div class="col-6 col-xs-6">{% render_field form.password style=style %}</div>
+  </div>
+  <div class="row">
+    <div class="col-4 col-xs-4">{% render_field form.is_staff style=style %}</div>
+    <div class="col-4 col-xs-4">{% render_field form.is_superuser style=style %}</div>
+    <div class="col-4 col-xs-4">{% render_field form.is_active style=style %}</div>
+  </div>
+  <div class="row">
+    <div class="col-8 col-xs-8">{% render_field form.email style=style %}</div>
+    <div class="col-4 col-xs-4">
+      <div class="form-group">
+        <label for="{{ form.email_verified.uuid }}">&nbsp;</label>
+        <span id="{{ form.email_verified.uuid }}"
+              class="btn form-control {% if form.email_verified.value %}btn-success{% else %}btn-danger{% endif %}">
+        {% if form.email_verified.value %}{% trans 'Verified' %}{% else %}{% trans 'Not verified' %}{% endif %}
+      </span>
+      </div>
+    </div>
+  </div>
+  {# Render the rest of the fields too in case we missed one #}
+  {% for field in form %}
+    {% if field.name != 'id' and field.name != 'first_name' and field.name != 'last_name' and field.name != 'username' and field.name != 'password' and field.name != 'is_staff' and field.name != 'is_superuser' and field.name != 'is_active' and field.name != 'state' and field.name != 'email' and field.name != 'email_verified' %}
+      <div class="row">
+        <div class="col-12">
+          {% render_field field style=style %}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

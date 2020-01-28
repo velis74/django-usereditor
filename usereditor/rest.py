@@ -1,14 +1,14 @@
 from django.contrib.auth import get_user_model
+from django.db import transaction
 from django.db.models.expressions import Value
 from django.db.models.functions import Coalesce, Concat
 from django.utils.translation import ugettext_lazy as _
-from rest_framework import routers
-from rest_framework.permissions import IsAdminUser
-from rest_framework.response import Response
-
 from dynamicforms import fields, serializers, viewsets
 from dynamicforms.action import Actions
 from dynamicforms.mixins import DisplayMode
+from rest_framework import routers
+from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
 
 
 class UserEmailField(fields.EmailField):
@@ -86,8 +86,20 @@ class UserSerializer(serializers.ModelSerializer):
 
         return res
 
+    @transaction.atomic
+    def create(self, validated_data):
+        res = super().create(validated_data)
+        self.update_user_settings(res, validated_data)
+        return res
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        # noinspection PyTypeChecker
+        self.update_user_settings(instance, validated_data)
+        return super().update(instance, validated_data)
+
     @staticmethod
-    def update_user_settings(instance, validated_data):
+    def update_user_settings(instance, validated_data, *args, **kwargs):
         from allauth.account.models import EmailAddress
 
         email = validated_data.get('email', None)
@@ -111,7 +123,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    permission_classes = (IsAdminUser, )
+    permission_classes = (IsAdminUser,)
 
     queryset = get_user_model().objects.exclude(username__in=('admin',)) \
         .annotate(un=Concat(Coalesce('first_name', Value('')), Value(' '), Coalesce('last_name', 'username'))) \

@@ -15,7 +15,5 @@ ___________
         'usereditor',
     ]
 
-2. Run `python manage.py migrate` to create the usereditor models.
-
-3. Use DRF routers to make user editor accessible through browser
+2. Use DRF routers to make user editor accessible through browser
 

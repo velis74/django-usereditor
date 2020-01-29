@@ -7,14 +7,14 @@ with open('requirements.txt', 'r') as fh:
 
 setuptools.setup(
     name="django-usereditor",
-    version="0.0.1",
+    version="0.0.2",
     author="Klemen Pukl",
     author_email="klemen.pukl@velis.si",
     description="Aplication for user overview and editing",
     long_description=long_description,
     long_description_content_type="text/x-rst",
-    url="https://github.com/Brontes/django-editusers",
-    packages=setuptools.find_packages(include=('editusers',)),
+    url="https://github.com/Brontes/django-usereditor",
+    packages=setuptools.find_packages(include=('usereditor',)),
     include_package_data=True,
     install_requires=requirements,
     python_requires='>=3.4',

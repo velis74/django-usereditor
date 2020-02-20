@@ -67,7 +67,7 @@ class UserSerializer(serializers.ModelSerializer):
     def get_full_name(self, obj):
         if not obj.id:
             return ''
-        return '%s %s' % (obj.last_name, obj.first_name)
+        return obj.get_full_name()
 
     def validate(self, attrs):
         res = super().validate(attrs)

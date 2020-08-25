@@ -13,8 +13,8 @@ from rest_framework.response import Response
 
 class UserEmailField(fields.EmailField):
 
-    def to_representation(self, value):
-        res = super().to_representation(getattr(value, 'email', '') or '')
+    def to_representation(self, value, row_data=None):
+        res = super().to_representation(getattr(value, 'email', '') or '', row_data)
         email, verified = self.parent.get_email(value)
         return email or res
 

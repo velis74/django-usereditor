@@ -35,11 +35,11 @@ class UserSerializer(serializers.ModelSerializer):
     actions = Actions(add_default_crud=True, add_default_filter=True)
     show_filter = True
 
-    password = fields.CharField(write_only=True, display_table=fields.DisplayMode.SUPPRESS)
+    password = fields.CharField(label=_('Password'), write_only=True, display_table=fields.DisplayMode.SUPPRESS)
     full_name = fields.SerializerMethodField(label=_('Full name'), read_only=True,
                                              display_form=fields.DisplayMode.SUPPRESS)
-    username = fields.CharField(display_table=fields.DisplayMode.SUPPRESS)
-    email = UserEmailField(source='*', required=False, allow_blank=True)
+    username = fields.CharField(label=_('Username'), display_table=fields.DisplayMode.SUPPRESS)
+    email = UserEmailField(label=_('Email'), source='*', required=False, allow_blank=True)
     email_verified = fields.SerializerMethodField(display_table=fields.DisplayMode.SUPPRESS)
 
     def __init__(self, *args, **kwargs):

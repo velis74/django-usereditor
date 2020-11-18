@@ -7,7 +7,7 @@ with open('requirements.txt', 'r') as fh:
 
 setuptools.setup(
     name="django-usereditor",
-    version="0.0.4",
+    version="0.0.5",
     author="Klemen Pukl",
     author_email="klemen.pukl@velis.si",
     description="Aplication for user overview and editing",

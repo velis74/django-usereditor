@@ -147,7 +147,8 @@ class UserViewSet(viewsets.ModelViewSet):
         partial = kwargs.pop('partial', False)
         pwd = request.data.get('password', None)
         instance = self.get_object()
-        request.data._mutable = True
+        if hasattr(request.data, '_mutable'):
+            request.data._mutable = True
         request.data['password'] = instance.password
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)

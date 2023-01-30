@@ -3,5 +3,5 @@ pytz
 coreapi>=1.32
 django>=1.10
 djangorestframework>=3.4
-dynamicforms
+dynamicforms<0.70.0
 typing; python_version < '3.5'

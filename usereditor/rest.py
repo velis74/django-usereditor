@@ -3,9 +3,9 @@ from django.db import transaction
 from django.db.models.expressions import Value
 from django.db.models.functions import Coalesce, Concat
 from django.utils.translation import ugettext_lazy as _
-from dynamicforms import fields, serializers, viewsets
-from dynamicforms.action import Actions
-from dynamicforms.mixins import DisplayMode
+from dynamicforms_legacy import fields, serializers, viewsets
+from dynamicforms_legacy.action import Actions
+from dynamicforms_legacy.mixins import DisplayMode
 from rest_framework import routers
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
